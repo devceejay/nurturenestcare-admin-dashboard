@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A prototype admin dashboard for NurtureNest designed to explore real-world childcare management workflows,built with HTML, CSS, and JavaScript"
+    />
+    <meta name="author" content="Chijioke Nwabasili" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      property="og:title"
+      content="Admin Dashboard prototype - NurtureNest Childcare | A Warm, Safe Place for Little Ones to Grow"
+    />
+    <meta
+      property="og:description"
+      content="A prototype admin dashboard for NurtureNest built to explore real-world childcare management workflows, built with HTML, CSS, and JavaScript"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="NurtureNest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Quicksand:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,400..900;1,400..900&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="dashboard.css" />
+    <script src="https://unpkg.com/feather-icons"></script>
+    <title>
+      Admin Dashboard prototype - NurtureNest Childcare | A Warm, Safe Place for
+      Little Ones to Grow
+    </title>
+  </head>
+  <body class="dashboard-page">
+    <aside class="sidebar">
+      <h2>NurtureNest</h2>
+      <nav>
+        <ul>
+          <li onclick="showSection('overview')">
+            <i data-feather="home"></i> Dashboard
+          </li>
+          <li onclick="showSection('enrollments')">
+            <i data-feather="users"></i> Enrollments
+          </li>
+          <li onclick="showSection('daily-logs')">
+            <i data-feather="clock"></i> Daily Logs
+          </li>
+          <li onclick="showSection('events')">
+            <i data-feather="calendar"></i> Events Calendar
+          </li>
+          <li onclick="showSection('messages')">
+            <i data-feather="mail"></i> Messages
+          </li>
+          <li onclick="showSection('content')">
+            <i data-feather="edit"></i> Manage Content
+          </li>
+          <li onclick="showSection('settings')">
+            <i data-feather="settings"></i> Settings
+          </li>
+          <li class="logout" onclick="logout()">
+            <i data-feather="log-out"></i> Log Out
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="dashboard-content">
+      <section id="overview" class="dashboard-section active">
+        <h2>Dashboard Overview</h2>
+        <div class="overview-top-row">
+          <div class="overview-welcome-box">
+            <h3>Welcome back, Gina 👋</h3>
+            <p>
+              You have <strong>3 unread messages</strong> and
+              <strong>2 new enrollments</strong> today.
+            </p>
+          </div>
+          <div class="overview-search-wrapper">
+            <!-- Search Bar -->
+            <div class="overview-search-bar">
+              <input
+                type="text"
+                name="dashboard-search"
+                id="dashboard-search"
+                placeholder="Search children, staff, or messages..."
+                autocomplete="off"
+              />
+              <button id="dashboard-search-btn" title="Search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </div>
+            <!-- Search Results -->
+            <ul id="dashboard-search-results" class="search-results"></ul>
+          </div>
+          <!-- Profile Dropdown -->
+          <div class="overview-profile-menu">
+            <div class="profile-trigger" onclick="toggleProfileMenu()">
+              <img
+                src="image/avatar-6.webp"
+                alt="Admin Avatar"
+                class="avatar"
+              />
+              <span class="profile-name" style="font-weight: 500">Gina</span>
+              <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </div>
+            <ul id="profileDropdown" class="profile-dropdown hidden">
+              <li><a href="#">My Profile</a></li>
+              <li><a href="#">Settings</a></li>
+              <li><a href="#">Log Out</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="overview-cards-container">
+          <div id="total-enrollments" class="overview-card card-enroll">
+            <i data-feather="users"></i>
+            <div class="card-stat-value"></div>
+            <div>Total Enrollments</div>
+          </div>
+          <div id="new-inquiries" class="overview-card card-inquiries">
+            <i data-feather="help-circle"></i>
+            <div class="card-stat-value"></div>
+            <div>New Inquiries</div>
+          </div>
+          <div id="pending-messages" class="overview-card card-messages">
+            <i data-feather="mail"></i>
+            <div class="card-stat-value"></div>
+            <div>Pending Messages</div>
+          </div>
+          <div id="total-attendance" class="overview-card card-attendance">
+            <i data-feather="check-circle"></i>
+            <div class="card-stat-value"></div>
+            <div>Total Attendance</div>
+          </div>
+        </div>
+        <!-- Enrollment chart -->
+        <div class="chart-container">
+          <h2>Weekly Enrollment Trend</h2>
+          <canvas id="weeklyEnrollmentChart" width="400" height="200"></canvas>
+        </div>
+      </section>
+
+      <!-- Enrollments -->
+      <section id="enrollments" class="dashboard-section">
+        <h2>Enrollments</h2>
+        <p>Manage enrolled children and their guardians below.</p>
+        <table class="enrollments-table">
+          <thead>
+            <tr>
+              <th>Child</th>
+              <th>Guardian</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Emma Johnson</td>
+              <td>Sarah Johnson</td>
+              <td>2025-01-15</td>
+              <td><span class="status active">Active</span></td>
+              <td>
+                <i data-feather="eye" class="view-icon"></i>
+                <i data-feather="edit" class="edit-icon"></i>
+              </td>
+            </tr>
+            <tr>
+              <td>Liam Brown</td>
+              <td>James Brown</td>
+              <td>2025-02-10</td>
+              <td><span class="status active">Active</span></td>
+              <td>
+                <i data-feather="eye" class="view-icon"></i>
+                <i data-feather="edit" class="edit-icon"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Daily Logs -->
+      <section id="daily-logs" class="dashboard-section">
+        <h2>Daily Timestamp Logs</h2>
+        <p>Track daily attendance timestamps for enrolled children.</p>
+        <table class="logs-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Child</th>
+              <th>Time In</th>
+              <th>Time Out</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="logs-body">
+            <!-- JS will insert rows here -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Events Calendar -->
+      <section id="events" class="dashboard-section">
+        <h2>Events Calendar</h2>
+        <p>View upcoming events and activities.</p>
+        <ul id="events-list" class="events-list">
+          <!-- Events will be populated by JS -->
+        </ul>
+      </section>
+
+      <!-- Messages -->
+      <section id="messages" class="dashboard-section">
+        <h2>Messages</h2>
+        <p>Review and respond to parent messages.</p>
+        <table class="messages-table">
+          <thead>
+            <tr>
+              <th>Sender</th>
+              <th>Subject</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sarah Johnson</td>
+              <td>Enrollment Inquiry</td>
+              <td>2025-07-10</td>
+              <td><span class="status unread">Unread</span></td>
+              <td>
+                <i data-feather="eye" class="view-icon"></i>
+                <i data-feather="trash-2" class="delete-icon"></i>
+              </td>
+            </tr>
+            <tr>
+              <td>Michael Lee</td>
+              <td>Schedule Change</td>
+              <td>2025-07-09</td>
+              <td><span class="status read">Read</span></td>
+              <td>
+                <i data-feather="eye" class="view-icon"></i>
+                <i data-feather="trash-2" class="delete-icon"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Content Management -->
+      <section id="content" class="dashboard-section">
+        <h2>Content Management</h2>
+        <p>
+          Update FAQs, announcements, or featured content shown on the website.
+        </p>
+        <form class="content-management-form">
+          <div id="content-success" class="hidden success-message">
+            ✅ All changes saved!
+          </div>
+          <div class="form-group">
+            <label for="faq">Edit FAQs:</label>
+            <textarea
+              name="faq"
+              id="faq"
+              rows="5"
+              placeholder="Write or update FAQs..."
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="announcement">New Announcement:</label>
+            <textarea
+              name="announcement"
+              id="announcement"
+              rows="5"
+              placeholder="E.g., Summer break starts July 28"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="highlight">Homepage Highlight:</label>
+            <input
+              type="text"
+              name="highlight"
+              id="highlight"
+              placeholder="E.g., Now enrolling toddlers (2-4 years)"
+            />
+          </div>
+          <button
+            type="submit"
+            class="save-changes-btn"
+            title="Click to save your changes"
+            aria-label="Save your changes"
+          >
+            Save Changes
+          </button>
+        </form>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings" class="dashboard-section">
+        <h2>Settings</h2>
+        <p>Update your admin profile and password here.</p>
+        <form class="settings-form">
+          <div class="form-group">
+            <label for="email">Admin Email:</label>
+            <input
+              type="email"
+              name="email"
+              required
+              id="email"
+              placeholder="admin@nurturenestcare.com"
+              autocomplete="off"
+              aria-required="true"
+            />
+          </div>
+          <div class="form-group">
+            <label for="current-password">Current Password:</label>
+            <input
+              type="password"
+              name="current-password"
+              required
+              id="current-password"
+              placeholder="Current password"
+              autocomplete="off"
+              aria-required="true"
+            />
+          </div>
+          <div class="form-group">
+            <label for="new-password">New Password:</label>
+            <input
+              type="password"
+              name="new-password"
+              required
+              id="new-password"
+              placeholder="New password"
+              autocomplete="off"
+              aria-required="true"
+            />
+          </div>
+          <button
+            type="submit"
+            class="update-profile-btn"
+            title="Click to update your profile"
+          >
+            Update Profile
+          </button>
+        </form>
+      </section>
+    </main>
+
+    <!-- Feather Icons  -->
+    <script>
+      feather.replace();
+    </script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="dashboard.js"></script>
+  </body>
+</html>

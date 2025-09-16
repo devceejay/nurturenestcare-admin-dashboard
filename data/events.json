@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Summer Picnic",
+    "date": "2025-07-28",
+    "description": "Outdoor picnic for kids and parents."
+  },
+  {
+    "id": 2,
+    "title": "Parent-Teacher Meeting",
+    "date": "2025-08-05",
+    "description": "Discuss progress and goals."
+  },
+  {
+    "id": 3,
+    "title": "Art & Craft Fair",
+    "date": "2025-08-15",
+    "description": "Showcase of children's artworks."
+  }
+]

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Secure admin login page for NurtureNest: A concept childcare brand project. Built with HTML, CSS, and JavaScript to prototype real-world admin access."
+    />
+    <meta name="author" content="Chijioke Nwabasili" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      property="og:title"
+      content="Admin Login - NurtureNest Childcare | A Warm, Safe Place for Little Ones to Grow"
+    />
+    <meta
+      property="og:description"
+      content="Prototype admin login page for NurtureNest, built with HTML, CSS, and JavaScript as part of a concept childcare brand project."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="NurtureNest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Quicksand:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,400..900;1,400..900&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="dashboard.css" />
+    <title>
+      Admin Login - NurtureNest Childcare | A Warm, Safe Place for Little Ones
+      to Grow
+    </title>
+  </head>
+  <body class="login-page">
+    <main>
+      <div class="login-container">
+        <h1 class="login-title">NurtureNest Admin</h1>
+        <form class="login-form" onsubmit="return login(event)">
+          <input
+            type="email"
+            name="email"
+            required
+            id="email"
+            placeholder="Email Address"
+            autocomplete="off"
+            aria-required="true"
+          />
+          <input
+            type="password"
+            name="password"
+            required
+            id="password"
+            placeholder="Password"
+            autocomplete="off"
+            aria-required="true"
+          />
+          <div class="forgot-password">
+            <a href="#password">Forgot password?</a>
+          </div>
+          <button type="submit" title="Click to login" class="login-btn">
+            Login
+          </button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
